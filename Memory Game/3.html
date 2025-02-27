@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <script>
+  </script>
+  <style>
+    img{
+        width: 150px;
+        height:120px;
+    }
+  </style>
+</head>
+<body onload="generateAll()">
+<h1>Meморија</h1>
+<div style="text-align:left; float:left">
+  <table border="1">
+    <tr>
+      <td><img id="11" onclick="check(this)"  src="zatvoreno.png"/></td>
+      <td><img id="12" onclick="check(this)" src="zatvoreno.png"/></td>
+      <td><img id="13" onclick="check(this)" src="zatvoreno.png"/></td>
+      <td><img id="14" onclick="check(this)" src="zatvoreno.png"/></td>
+    </tr>
+    <tr>
+      <td><img id="21" onclick="check(this)" src="zatvoreno.png"/></td>
+      <td><img id="22" onclick="check(this)" src="zatvoreno.png"/></td>
+      <td><img id="23" onclick="check(this)" src="zatvoreno.png"/></td>
+      <td><img id="24" onclick="check(this)" src="zatvoreno.png"/></td></tr>
+    <tr>
+      <td><img id="31" onclick="check(this)" src="zatvoreno.png"/></td>
+      <td><img id="32" onclick="check(this)" src="zatvoreno.png"/></td>
+      <td><img id="33" onclick="check(this)" src="zatvoreno.png"/></td>
+      <td><img id="34" onclick="check(this)" src="zatvoreno.png"/></td>
+    </tr>
+    <tr>
+      <td><img id="41" onclick="check(this)" src="zatvoreno.png"/></td>
+      <td><img id="42" onclick="check(this)" src="zatvoreno.png"/></td>
+      <td><img id="43" onclick="check(this)" src="zatvoreno.png"/></td>
+      <td><img id="44" onclick="check(this)" src="zatvoreno.png"/></td>
+    </tr>
+  </table>
+  <input onclick="reset()" type="submit" value="RESET"/>
+</div>
+<br/>
+<script>
+    let generate=["ball.jfif","cheese.jpg","flower.avif","nasa.png","phone.jpg","ring.webp","tomato.jpg","tv.webp","ball.jfif","cheese.jpg","flower.avif","nasa.png","phone.jpg","ring.webp","tomato.jpg","tv.webp"]
+
+    function generateIndex(){
+        const random=Math.floor(Math.random()*generate.length)
+        return random
+    }
+    let objects=[]
+    function generateAll(){
+        for (let i = 1; i <= 4; i++) {
+            for (let j = 1; j <= 4; j++) {
+                const id = `${i}${j}`;
+                var indeks=generateIndex()
+                let obj={}
+                obj.id=id
+                obj.elem=generate[indeks]
+                objects.push(obj)
+                generate.splice(indeks,1)
+            }
+        }
+        console.log(objects)
+    }
+    let openTiles=[]
+    let matches=0
+    function check(element) {
+        for (let e of objects) {
+            if (e.id === element.id) {
+                element.setAttribute("src", e.elem);
+                openTiles.push(element);
+
+                if (openTiles.length === 2) {
+                    if (openTiles[0].getAttribute("src") === openTiles[1].getAttribute("src")) {
+                        console.log("match");
+                        openTiles.pop()
+                        openTiles.pop()
+                        console.log(openTiles.length)
+                        matches++
+                    } else {
+                        setTimeout(() => {
+                            openTiles[0].setAttribute("src", "zatvoreno.png");
+                            openTiles[1].setAttribute("src", "zatvoreno.png");
+                            openTiles.pop()
+                            openTiles.pop()
+                            console.log(openTiles.length)
+                        }, 1000);
+                    }
+                }
+                break;
+            }
+        }
+        if(matches===8){
+            document.write("<h1>You won the game </h1>")
+        }
+    }
+
+    function reset() {
+        for (let i = 1; i <= 4; i++) {
+            for (let j = 1; j <= 4; j++) {
+                const id = `${i}${j}`;
+                document.getElementById(id).setAttribute("src", "zatvoreno.png");
+            }
+        }
+    }
+
+</script>
+</body>
+</html>

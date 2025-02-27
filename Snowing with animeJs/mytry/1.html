@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Try</title>
+</head>
+<body onload="timeline()">
+<script src="anime.min.js"></script>
+<script>
+    let elem1=createImage("s1.png");
+    let elem2=createImage("s2.png");
+    let elem3=createImage("s3.png");
+    let elem4=createImage("s4.png");
+    let elem5=createImage("s5.png");
+    let elem6=createImage("s6.png");
+    function createImage(src){
+      let elem=document.createElement("img")
+        elem.setAttribute('src',src)
+        elem.style.width=200+'px'
+        elem.style.position = 'absolute';
+        elem.style.top = '-200px';
+        elem.style.left=x()+'px';
+        document.body.appendChild(elem)
+        return elem
+    }
+
+  let elements=[elem1,elem2,elem3,elem4,elem5,elem6]
+  function index(){
+      var indexi=Math.floor(Math.random()*elements.length)
+      return indexi
+  }
+  function x(){
+      var indexi=Math.floor(Math.random()*1200)
+      return indexi
+  }
+  function timeline(){
+        elements[1].style.left=x()+'px';
+      elements[2].style.left=x()+'px';
+      elements[3].style.left=x()+'px';
+      elements[4].style.left=x()+'px';
+      elements[5].style.left=x()+'px';
+      anime({
+          targets:elements,
+          translateY:[-200,900],
+          easing:'easeInOutQuad',
+          duration:function (el,i,l){return i*1000},
+          delay:function (el,i,l){return i*500},
+          loop:true
+      })
+
+
+  }
+
+
+
+
+</script>
+</body>
+</html>
